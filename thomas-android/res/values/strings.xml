@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">Thomas</string>
+    <string name="title_trainingsession_detail">TrainingSession Detail</string>
+    <string name="title_trainingsession_list">TrainingSessions</string>
+
+</resources>
