@@ -1,8 +1,5 @@
 package com.servolabs.thomas;
 
-import com.servolabs.thomas.dummy.DummyContent;
-
-import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -10,9 +7,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.servolabs.thomas.dummy.DummyContent;
+
 public class TrainingSessionListFragment extends ListFragment {
 
-    private static final String STATE_ACTIVATED_POSITION = "activated_position";
+    static final String STATE_ACTIVATED_POSITION = "activated_position";
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
@@ -35,16 +34,13 @@ public class TrainingSessionListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                R.layout.simple_list_item_activated_1,
-                R.id.text1,
-                DummyContent.ITEMS));
+                        android.R.layout.simple_list_item_activated_1, android.R.id.text1, DummyContent.ITEMS));
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState != null && savedInstanceState
-                .containsKey(STATE_ACTIVATED_POSITION)) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
     }
@@ -80,9 +76,7 @@ public class TrainingSessionListFragment extends ListFragment {
     }
 
     public void setActivateOnItemClick(boolean activateOnItemClick) {
-        getListView().setChoiceMode(activateOnItemClick
-                ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
+        getListView().setChoiceMode(activateOnItemClick ? ListView.CHOICE_MODE_SINGLE : ListView.CHOICE_MODE_NONE);
     }
 
     public void setActivatedPosition(int position) {

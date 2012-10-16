@@ -11,10 +11,10 @@
 
   <properties>
     <android.maven.plugin.version>3.1.1</android.maven.plugin.version>
-    <android.platform>15</android.platform>
+    <android.platform>16</android.platform>
     <android.version>4.1.1.4</android.version>
     <junit.version>4.8.1</junit.version>
-    <robolectric.version>1.1</robolectric.version>
+    <robolectric.version>1.2-SNAPSHOT</robolectric.version>
     <spring-android.version>1.0.0.RELEASE</spring-android.version>
     <surefire.maven.plugin.version>2.12</surefire.maven.plugin.version>
   </properties>
@@ -25,13 +25,6 @@
       <name>SpringSource Repository</name>
       <url>http://repo.springsource.org/release</url>
     </repository>
-    <!-- 
-    <repository>
-      <id>guice-maven</id>
-      <name>guice maven</name>
-      <url>http://guice-maven.googlecode.com/svn/trunk</url>
-    </repository>
-     -->
   </repositories>
 
   <dependencies>
