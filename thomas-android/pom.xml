@@ -6,7 +6,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>apk</packaging>
   <name>Thomas The Training Course Manager</name>
-  <description>- A Really Useful Application and right on time.  Narrated by George Carlin</description>
+  <description>- A Really Useful Application and right on time.</description>
 
 
   <properties>
@@ -17,6 +17,7 @@
     <robolectric.version>1.2-SNAPSHOT</robolectric.version>
     <spring-android.version>1.0.0.RELEASE</spring-android.version>
     <surefire.maven.plugin.version>2.12</surefire.maven.plugin.version>
+    <emma.rt.control.port>9999</emma.rt.control.port>
   </properties>
 
   <repositories>
