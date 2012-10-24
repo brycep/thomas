@@ -15,8 +15,6 @@ public class RetrieveAvailableTrainingSessionsServiceImpl implements RetrieveAva
     public TrainingSession[] retrieve() {
         // Create a new RestTemplate instance
         RestTemplate restTemplate = new RestTemplate();
-
-//        restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
         HttpHeaders requestHeaders = new HttpHeaders();
