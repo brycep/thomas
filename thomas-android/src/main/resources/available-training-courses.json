@@ -1,4 +1,4 @@
-{"sessions":[
+[
     {
        "courseName":"Introduction to Git",
        "instructor":"James Seville",
@@ -14,5 +14,3 @@
         "instructor":"Bert Liverpool",
         "startTime":"2012-12-06T20:00:00+0000"
     }]
-
-}
