@@ -24,10 +24,10 @@ public class TrainingSessionListActivity extends FragmentActivity implements Tra
      * This method replaces the ADT-generated mTwoPane instance field, to better support unit testing.
      */
     private boolean isTwoPaneLayout() {
-        return getGameDetailContainer() != null;
+        return getTrainingDetailContainer() != null;
     }
 
-    private FrameLayout getGameDetailContainer() {
+    private FrameLayout getTrainingDetailContainer() {
         if (detailContainer == null) {
             detailContainer = (FrameLayout) findViewById(R.id.trainingsession_detail_container);
         }

@@ -1,0 +1,18 @@
+{"sessions":[
+    {
+       "courseName":"Introduction to Git",
+       "instructor":"James Seville",
+       "startTime":"2012-12-01T21:00:00+0000"
+    },
+    {
+        "courseName":"Maven Tips and Tricks",
+        "instructor":"Henry Rotterdam",
+        "startTime":"2012-12-04T22:00:00+0000"
+    },
+    {
+        "courseName":"Advanced StringBuffer Techniques",
+        "instructor":"Bert Liverpool",
+        "startTime":"2012-12-06T20:00:00+0000"
+    }]
+
+}
