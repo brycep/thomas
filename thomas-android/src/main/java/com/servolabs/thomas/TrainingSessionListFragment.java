@@ -1,20 +1,33 @@
 package com.servolabs.thomas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.servolabs.thomas.domain.TrainingSession;
 import com.servolabs.thomas.dummy.DummyContent;
 
-public class TrainingSessionListFragment extends ListFragment {
+public class TrainingSessionListFragment extends ListFragment implements LoaderCallbacks<List<TrainingSession>> {
 
     static final String STATE_ACTIVATED_POSITION = "activated_position";
 
+    static final int LIST_LOADER_ID = 1;
+
+    private static final String LOG_TAG = TrainingSessionListFragment.class.getSimpleName();
+
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
+
+    private Loader<List<TrainingSession>> trainingSessionListLoader; // TODO Replace with factory (a la Farpost2)
 
     public interface Callbacks {
 
@@ -31,10 +44,42 @@ public class TrainingSessionListFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                        android.R.layout.simple_list_item_activated_1, android.R.id.text1, DummyContent.ITEMS));
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        /*
+         * This will cause unit tests to fail because cannot access resources without attaching an Activity and
+         * Robolectric's ShadowListFragment does not implement Callbacks!
+         */
+        // setEmptyText(getResources().getString(R.string.empty_training_session_list));
+
+        getLoaderManager().initLoader(LIST_LOADER_ID, null, this);
+        setListAdapter(createListAdapter(new ArrayList<TrainingSession>()));
+    }
+
+    private ArrayAdapter<TrainingSession> createListAdapter(List<TrainingSession> trainingSessions) {
+        // TODO Replace with custom adapter based on custom layout for training session.
+        return new ArrayAdapter<TrainingSession>(getActivity(), android.R.layout.simple_list_item_activated_1,
+                        android.R.id.text1, trainingSessions);
+    }
+
+    @Override
+    public Loader<List<TrainingSession>> onCreateLoader(int id, Bundle args) {
+        Log.d(LOG_TAG, "In onCreateLoader");
+        return trainingSessionListLoader == null ? new TrainingSessionLoader(getActivity().getApplicationContext())
+                        : trainingSessionListLoader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<TrainingSession>> loader, List<TrainingSession> data) {
+        // TODO Will this actually work? Do we need to manipulate the existing adapter instead?
+        Log.d(LOG_TAG, "In onLoadFinished with this data: " + data);
+        setListAdapter(createListAdapter(data));
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<TrainingSession>> loader) {
+        setListAdapter(createListAdapter(new ArrayList<TrainingSession>()));
     }
 
     @Override
@@ -87,5 +132,12 @@ public class TrainingSessionListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    /**
+     * Added to support unit test
+     */
+    void setTrainingSessionListLoader(Loader<List<TrainingSession>> trainingSessionListLoader) {
+        this.trainingSessionListLoader = trainingSessionListLoader;
     }
 }
