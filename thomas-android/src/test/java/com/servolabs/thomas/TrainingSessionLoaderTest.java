@@ -105,6 +105,39 @@ public class TrainingSessionLoaderTest {
         assertThat(shadowLoader.deliveredResult, is(equalTo(trainingSessionsAsList())));
     }
 
+    @Test
+    public void onStopLoadingCallsCancelLoading()  {
+        loader.onStopLoading();
+
+        ShadowLoader<List<TrainingSession>> shadowLoader = (ShadowLoader) Robolectric.shadowOf_(loader);
+        assertThat(shadowLoader.cancelled, is(true));
+    }
+
+    @Test
+    public void onCancelledClearsTrainingSessions()  {
+        List<TrainingSession> trainingSessions = trainingSessionsAsList();
+        loader.onCanceled(trainingSessions);
+
+        assertThat(trainingSessions.isEmpty(), is(true));
+    }
+
+    @Test
+    public void onResetStopsLoadingData()  {
+        loader.onReset();
+
+        ShadowLoader<List<TrainingSession>> shadowLoader = (ShadowLoader) Robolectric.shadowOf_(loader);
+        assertThat(shadowLoader.reset, is(true));
+        assertThat(shadowLoader.stopped, is(true));
+    }
+
+    @Test
+    public void onResetClearsLastData()  {
+        loader.setLastTrainingSessions(trainingSessionsAsList());
+        loader.onReset();
+
+        assertThat(loader.getLastTrainingSessions(), is(nullValue()));
+    }
+
     private List<TrainingSession> trainingSessionsAsList()  {
         return Lists.newArrayList(this.trainingSessions);
     }
