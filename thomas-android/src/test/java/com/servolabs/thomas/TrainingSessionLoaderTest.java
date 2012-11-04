@@ -65,7 +65,7 @@ public class TrainingSessionLoaderTest {
 
         ShadowLoader<List<TrainingSession>> shadowLoader
                 = (ShadowLoader) Robolectric.shadowOf_(loader);
-        assertThat(shadowLoader.data.size(), is(1));
+        assertThat(shadowLoader.deliveredResult.size(), is(1));
     }
 
     @Test
@@ -75,8 +75,8 @@ public class TrainingSessionLoaderTest {
 
         loader.deliverResult(trainingSessionsAsList());
 
-        // Assert that the data was never delivered to the super() class.
-        assertThat(shadowLoader.data, is(nullValue()));
+        // Assert that the deliveredResult was never delivered to the super() class.
+        assertThat(shadowLoader.deliveredResult, is(nullValue()));
     }
 
     @Test
@@ -85,6 +85,24 @@ public class TrainingSessionLoaderTest {
         loader.deliverResult(Lists.<TrainingSession>newArrayList());
 
         assertThat(loader.getLastTrainingSessions().size(), is(0));
+    }
+
+    @Test
+    public void onStartLoadingForcesLoaderToLoad()  {
+        loader.onStartLoading();
+
+        ShadowLoader<List<TrainingSession>> shadowLoader = (ShadowLoader) Robolectric.shadowOf_(loader);
+        assertThat(shadowLoader.forceLoaded, is(true));
+    }
+
+    @Test
+    public void onStartLoadingReturnsCachedResultsIfWeHaveThem()  {
+        loader.setLastTrainingSessions(trainingSessionsAsList());
+
+        loader.onStartLoading();
+
+        ShadowLoader<List<TrainingSession>> shadowLoader = (ShadowLoader) Robolectric.shadowOf_(loader);
+        assertThat(shadowLoader.deliveredResult, is(equalTo(trainingSessionsAsList())));
     }
 
     private List<TrainingSession> trainingSessionsAsList()  {

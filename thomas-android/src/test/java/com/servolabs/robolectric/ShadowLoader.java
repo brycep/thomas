@@ -9,7 +9,8 @@ public class ShadowLoader<D> {
 
     public boolean reset = false;
     public boolean started = true;
-    public D data = null;
+    public boolean forceLoaded = false;
+    public D deliveredResult = null;
 
     @Implementation
     public boolean isReset()  {
@@ -23,12 +24,17 @@ public class ShadowLoader<D> {
 
     @Implementation
     void deliverResult(D deliveredData)  {
-        this.data = deliveredData;
+        this.deliveredResult = deliveredData;
     }
 
     @Implementation
     boolean isStarted()  {
         return started;
+    }
+
+    @Implementation
+    void forceLoad()  {
+        forceLoaded = true;
     }
 
 }

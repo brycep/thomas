@@ -73,7 +73,7 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
     @Override
     public void onLoadFinished(Loader<List<TrainingSession>> loader, List<TrainingSession> data) {
         // TODO Will this actually work? Do we need to manipulate the existing adapter instead?
-        Log.d(LOG_TAG, "In onLoadFinished with this data: " + data);
+        Log.d(LOG_TAG, "In onLoadFinished with this deliveredResult: " + data);
         setListAdapter(createListAdapter(data));
     }
 
