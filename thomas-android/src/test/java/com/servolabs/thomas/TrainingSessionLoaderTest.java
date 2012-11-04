@@ -127,7 +127,7 @@ public class TrainingSessionLoaderTest {
 
         ShadowLoader<List<TrainingSession>> shadowLoader = (ShadowLoader) Robolectric.shadowOf_(loader);
         assertThat(shadowLoader.reset, is(true));
-        assertThat(shadowLoader.stopped, is(true));
+        assertThat(shadowLoader.cancelled, is(true));
     }
 
     @Test

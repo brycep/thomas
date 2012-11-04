@@ -11,7 +11,6 @@ public class ShadowLoader<D> {
     public boolean started = true;
     public boolean forceLoaded = false;
     public boolean cancelled = false;
-    public boolean stopped = false;
     public D deliveredResult = null;
 
     @Implementation
@@ -47,11 +46,6 @@ public class ShadowLoader<D> {
     @Implementation
     void onReset() {
         reset = true;
-    }
-
-    @Implementation
-    void onStopLoading()  {
-        stopped = true;
     }
 
 }

@@ -1,13 +1,12 @@
 package com.servolabs.thomas.webservice;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.servolabs.thomas.domain.TrainingSession;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -23,23 +22,10 @@ public class RetrieveAvailableTrainingSessionsServiceImpl implements RetrieveAva
         // Create a new RestTemplate instance
         RestTemplate restTemplate = new RestTemplate();
         GsonHttpMessageConverter converter = new GsonHttpMessageConverter();
-        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-            @Override
-            public Date deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                Date result = null;
-                try  {
-                    result = jsonElement == null ? null : dateFormat.parse(jsonElement.getAsString());
-                } catch(ParseException exp)  {
-                    // Log that we had trouble parsing a date.
-                }
-                return result;
-            }
-        }).registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
-            @Override
-            public JsonElement serialize(Date date, Type type, JsonSerializationContext jsonSerializationContext) {
-                return date == null ? null : new JsonPrimitive(dateFormat.format(date));
-            }
-        }).create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new DateDeserializer())
+                .registerTypeAdapter(Date.class, new DateSerializer())
+                .create();
 
         converter.setGson(gson);
         restTemplate.getMessageConverters().add(converter);
