@@ -1,15 +1,14 @@
 package com.servolabs.thomas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
-
 import com.servolabs.thomas.domain.TrainingSession;
 import com.servolabs.thomas.webservice.RetrieveAvailableTrainingSessionsService;
 import com.servolabs.thomas.webservice.RetrieveAvailableTrainingSessionsServiceImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Lifecycle methods based on the AbstractCursorLoader class in cwac-loaderex.
@@ -136,5 +135,12 @@ public class TrainingSessionLoader extends AsyncTaskLoader<List<TrainingSession>
      */
     void setService(RetrieveAvailableTrainingSessionsService service) {
         this.service = service;
+    }
+
+    /**
+     * Also added to support unit tests
+     */
+    List<TrainingSession> getLastTrainingSessions() {
+        return lastTrainingSessions;
     }
 }

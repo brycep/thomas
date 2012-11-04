@@ -20,6 +20,7 @@ public class ThomasTestRunner extends RobolectricTestRunner {
     protected void bindShadowClasses() {
         Robolectric.bindShadowClass(ShadowCheckableListView.class);
         Robolectric.bindShadowClass(ShadowFragmentActivityWithActionBar.class);
+        Robolectric.bindShadowClass(ShadowLoader.class);
     }
 
 }
