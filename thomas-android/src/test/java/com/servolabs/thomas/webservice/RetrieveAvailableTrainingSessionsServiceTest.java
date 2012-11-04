@@ -22,17 +22,17 @@ public class RetrieveAvailableTrainingSessionsServiceTest {
                     "    {\n"+
                     "       \"courseName\":\"Introduction to Git\",\n"+
                     "       \"instructor\":\"James Seville\",\n"+
-                    "       \"startTime\":\"Dec 01, 2012 1:00:00 PM\"\n"+
+                    "       \"startTime\":\"2012-12-01T21:00:00+0000\"\n"+
                     "    },\n"+
                     "    {\n"+
                     "        \"courseName\":\"Maven Tips and Tricks\",\n"+
                     "        \"instructor\":\"Henry Rotterdam\",\n"+
-                    "        \"startTime\":\"Dec 04, 2012 2:00:00 PM\"\n" +
+                    "        \"startTime\":\"2012-12-04T22:00:00+0000\"\n" +
                     "    },\n"+
                     "    {\n"+
                     "        \"courseName\":\"Advanced StringBuffer Techniques\",\n"+
                     "        \"instructor\":\"Bert Liverpool\",\n"+
-                    "        \"startTime\":\"Dec 06, 2012 5:00:00 PM\"\n"+
+                    "        \"startTime\":\"2012-12-06T20:00:00+0000\"\n"+
                     "    } ]";
 
     RetrieveAvailableTrainingSessionsService service = new RetrieveAvailableTrainingSessionsServiceImpl();
@@ -61,7 +61,7 @@ public class RetrieveAvailableTrainingSessionsServiceTest {
 
         assertThat(sessions[0].getCourseName(), is(equalTo("Introduction to Git")));
         assertThat(sessions[0].getInstructor(), is(equalTo("James Seville")));
-        assertThat(sessions[0].getStartTime(), is(equalTo(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse("12/01/2012 13:00:00"))));
+        assertThat(sessions[0].getStartTime(), is(equalTo(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse("12/01/2012 15:00:00"))));
     }
 
 }

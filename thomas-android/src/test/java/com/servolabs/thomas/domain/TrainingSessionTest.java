@@ -12,15 +12,19 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(ThomasTestRunner.class)
 public class TrainingSessionTest {
+    Date now = new Date();
+    TrainingSession trainingSession = new TrainingSession("TestCourseName", "TestInstructor", now);
 
     @Test
     public void initializingConstructor()  {
-        Date now = new Date();
-        TrainingSession trainingSession = new TrainingSession("TestCourseName", "TestInstructor", now);
 
         assertThat(trainingSession.getCourseName(), is(equalTo("TestCourseName")));
         assertThat(trainingSession.getInstructor(), is(equalTo("TestInstructor")));
         assertThat(trainingSession.getStartTime(), is(now));
     }
 
+    @Test
+    public void toStringOutputsNameAndInstructor()  {
+        assertThat(trainingSession.toString(), is(equalTo("TestCourseName - TestInstructor")));
+    }
 }

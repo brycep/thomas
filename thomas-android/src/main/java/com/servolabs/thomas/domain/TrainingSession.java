@@ -27,4 +27,8 @@ public class TrainingSession {
         return startTime;
     }
 
+    @Override
+    public String toString() {
+        return courseName + " - " + instructor;
+    }
 }
