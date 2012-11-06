@@ -1,26 +1,25 @@
 package com.servolabs.thomas;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.widget.AbsListView;
 import android.widget.ListView;
-
 import com.servolabs.robolectric.ThomasTestRunner;
 import com.servolabs.thomas.domain.TrainingSession;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.tester.android.util.TestLoaderManager;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(ThomasTestRunner.class)
 public class TrainingSessionListFragmentTest {
@@ -135,6 +134,19 @@ public class TrainingSessionListFragmentTest {
         fragment.onViewCreated(null, savedInstanceState);
 
         assertThat(fragment.getListView().isItemChecked(2), is(true));
+    }
+
+    @Test
+    public void nullCallbackImplementationShouldDoNothing()  throws Exception  {
+        Throwable somethingBad = null;
+        try  {
+            fragment.sNullCallbacks.onItemSelected("My Id");
+        } catch(Throwable exp)  {
+            somethingBad = exp;
+        }
+
+        // Make sure nothing bad happened.
+        assertThat(somethingBad, is(nullValue()));
     }
 
     private class TestLoader extends Loader<List<TrainingSession>> {

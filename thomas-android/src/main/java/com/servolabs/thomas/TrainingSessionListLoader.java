@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * Lifecycle methods based on the AbstractCursorLoader class in cwac-loaderex.
  */
-public class TrainingSessionLoader extends AsyncTaskLoader<List<TrainingSession>> {
+public class TrainingSessionListLoader extends AsyncTaskLoader<List<TrainingSession>> {
 
-    private static final String LOG_TAG = TrainingSessionLoader.class.getSimpleName();
+    private static final String LOG_TAG = TrainingSessionListLoader.class.getSimpleName();
 
     private RetrieveAvailableTrainingSessionsService service;
     private List<TrainingSession> lastTrainingSessions;
 
-    public TrainingSessionLoader(Context context) {
+    public TrainingSessionListLoader(Context context) {
         super(context);
     }
 

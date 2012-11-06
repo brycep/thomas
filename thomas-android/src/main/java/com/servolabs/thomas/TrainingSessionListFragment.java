@@ -1,8 +1,5 @@
 package com.servolabs.thomas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -12,9 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.servolabs.thomas.domain.TrainingSession;
 import com.servolabs.thomas.dummy.DummyContent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrainingSessionListFragment extends ListFragment implements LoaderCallbacks<List<TrainingSession>> {
 
@@ -24,7 +23,7 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
 
     private static final String LOG_TAG = TrainingSessionListFragment.class.getSimpleName();
 
-    private Callbacks mCallbacks = sDummyCallbacks;
+    private Callbacks mCallbacks = sNullCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     private Loader<List<TrainingSession>> trainingSessionListLoader; // TODO Replace with factory (a la Farpost2)
@@ -34,7 +33,7 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
         public void onItemSelected(String id);
     }
 
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    static Callbacks sNullCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(String id) {
         }
@@ -66,7 +65,7 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
     @Override
     public Loader<List<TrainingSession>> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "In onCreateLoader");
-        return trainingSessionListLoader == null ? new TrainingSessionLoader(getActivity().getApplicationContext())
+        return trainingSessionListLoader == null ? new TrainingSessionListLoader(getActivity().getApplicationContext())
                         : trainingSessionListLoader;
     }
 
@@ -103,7 +102,7 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = sNullCallbacks;
     }
 
     @Override
