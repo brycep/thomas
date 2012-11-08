@@ -140,7 +140,7 @@ public class TrainingSessionListFragmentTest {
     public void nullCallbackImplementationShouldDoNothing()  throws Exception  {
         Throwable somethingBad = null;
         try  {
-            fragment.sNullCallbacks.onItemSelected("My Id");
+            fragment.sNullCallbacks.onItemSelected(new TrainingSession());
         } catch(Throwable exp)  {
             somethingBad = exp;
         }

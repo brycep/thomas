@@ -27,4 +27,6 @@ public class TrainingSessionTest {
     public void toStringOutputsNameAndInstructor()  {
         assertThat(trainingSession.toString(), is(equalTo("TestCourseName - TestInstructor")));
     }
+
+
 }

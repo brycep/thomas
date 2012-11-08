@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.servolabs.thomas.domain.TrainingSession;
-import com.servolabs.thomas.dummy.DummyContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +29,12 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
 
     public interface Callbacks {
 
-        public void onItemSelected(String id);
+        public void onItemSelected(TrainingSession trainingSession);
     }
 
     static Callbacks sNullCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(TrainingSession trainingSession) {
         }
     };
 
@@ -108,7 +107,8 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        TrainingSession trainingSession = (TrainingSession) getListAdapter().getItem(position);
+        mCallbacks.onItemSelected(trainingSession);
     }
 
     @Override

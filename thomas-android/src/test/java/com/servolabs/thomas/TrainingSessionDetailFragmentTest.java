@@ -1,23 +1,21 @@
 package com.servolabs.thomas;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import android.app.Service;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
 import com.servolabs.robolectric.ThomasTestRunner;
-import com.servolabs.thomas.dummy.DummyContent;
+import com.servolabs.thomas.domain.TrainingSession;
 import com.xtremelabs.robolectric.Robolectric;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.Date;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(ThomasTestRunner.class)
 public class TrainingSessionDetailFragmentTest {
@@ -36,23 +34,23 @@ public class TrainingSessionDetailFragmentTest {
     public void shouldNotHaveAnItemIfFragmentCreatedWithoutItemArgument() {
         fragment.onCreate(null);
 
-        assertThat(fragment.mItem, is(nullValue()));
+        assertThat(fragment.trainingSession, is(nullValue()));
     }
 
-    // TODO return item from DB
     @Test
     public void shouldHaveCorrespondingItemIfFragmentCreatedWithItemArgument() {
-        arguments.putString(TrainingSessionDetailFragment.ARG_ITEM_ID, "2");
+        TrainingSession trainingSession = new TrainingSession();
+        arguments.putParcelable(TrainingSessionDetailFragment.ARG_ITEM_ID, trainingSession);
 
         fragment.onCreate(null);
 
-        assertThat(fragment.mItem, is(DummyContent.ITEM_MAP.get("2")));
+        assertThat(fragment.trainingSession, is(trainingSession));
     }
 
-    // TODO Replace with training session-specific view population
     @Test
     public void shouldSetDetailTextViewWithItemContentWhenCreatingView() throws Exception {
-        arguments.putString(TrainingSessionDetailFragment.ARG_ITEM_ID, "2");
+        TrainingSession trainingSession = new TrainingSession("UnitTest", "", new Date());
+        arguments.putParcelable(TrainingSessionDetailFragment.ARG_ITEM_ID, trainingSession);
         fragment.onCreate(null);
         LayoutInflater inflater = (LayoutInflater) Robolectric.application
                         .getSystemService(Service.LAYOUT_INFLATER_SERVICE);
@@ -62,7 +60,7 @@ public class TrainingSessionDetailFragmentTest {
         assertThat(rootView, is(notNullValue()));
         TextView gameDetailView = (TextView) rootView.findViewById(R.id.trainingsession_detail);
         assertThat(gameDetailView, is(notNullValue()));
-        assertThat(gameDetailView.getText().toString(), is(DummyContent.ITEM_MAP.get("2").content));
+        assertThat(gameDetailView.getText().toString(), is(trainingSession.getCourseName()));
     }
 
 }

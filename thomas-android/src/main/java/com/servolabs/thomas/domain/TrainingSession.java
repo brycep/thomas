@@ -1,8 +1,11 @@
 package com.servolabs.thomas.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class TrainingSession {
+public class TrainingSession implements Parcelable  {
     private String courseName;
     private String instructor;
     private Date startTime;
@@ -30,5 +33,34 @@ public class TrainingSession {
     @Override
     public String toString() {
         return courseName + " - " + instructor;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(courseName);
+        dest.writeString(instructor);
+        dest.writeLong(startTime.getTime());
+    }
+
+    public static final Parcelable.Creator<TrainingSession> CREATOR
+            = new Parcelable.Creator<TrainingSession>() {
+        public TrainingSession createFromParcel(Parcel in) {
+            return new TrainingSession(in);
+        }
+
+        public TrainingSession[] newArray(int size) {
+            return new TrainingSession[size];
+        }
+    };
+
+    private TrainingSession(Parcel in) {
+        courseName = in.readString();
+        instructor = in.readString();
+        startTime = new Date(in.readLong());
     }
 }

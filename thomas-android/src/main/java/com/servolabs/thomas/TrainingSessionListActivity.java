@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.FrameLayout;
+import com.servolabs.thomas.domain.TrainingSession;
 
 public class TrainingSessionListActivity extends FragmentActivity implements TrainingSessionListFragment.Callbacks {
 
@@ -35,10 +36,10 @@ public class TrainingSessionListActivity extends FragmentActivity implements Tra
     }
 
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(TrainingSession trainingSession) {
         if (isTwoPaneLayout()) {
             Bundle arguments = new Bundle();
-            arguments.putString(TrainingSessionDetailFragment.ARG_ITEM_ID, id);
+            arguments.putParcelable(TrainingSessionDetailFragment.ARG_ITEM_ID, trainingSession);
             TrainingSessionDetailFragment fragment = new TrainingSessionDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction().replace(R.id.trainingsession_detail_container, fragment)
@@ -46,7 +47,7 @@ public class TrainingSessionListActivity extends FragmentActivity implements Tra
 
         } else {
             Intent detailIntent = new Intent(this, TrainingSessionDetailActivity.class);
-            detailIntent.putExtra(TrainingSessionDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(TrainingSessionDetailFragment.ARG_ITEM_ID, trainingSession);
             startActivity(detailIntent);
         }
     }

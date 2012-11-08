@@ -1,22 +1,18 @@
 package com.servolabs.thomas;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import android.content.Intent;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.widget.FrameLayout;
+import com.servolabs.robolectric.ThomasTestRunner;
+import com.servolabs.thomas.domain.TrainingSession;
+import com.xtremelabs.robolectric.Robolectric;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.widget.FrameLayout;
-
-import com.servolabs.robolectric.ThomasTestRunner;
-import com.xtremelabs.robolectric.Robolectric;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(ThomasTestRunner.class)
 public class TrainingSessionListActivityTest {
@@ -35,13 +31,14 @@ public class TrainingSessionListActivityTest {
     public void shouldStartActivityWhenSelectingItemInSinglePaneMode() {
         activity.onCreate(null);
 
-        activity.onItemSelected("42");
+        TrainingSession trainingSession = new TrainingSession();
+        activity.onItemSelected(trainingSession);
 
         Intent startedIntent = Robolectric.shadowOf(activity).getNextStartedActivity();
         assertThat(startedIntent, is(notNullValue()));
         assertThat(startedIntent.getComponent().getClassName(),
                         equalTo(TrainingSessionDetailActivity.class.getCanonicalName()));
-        assertThat(startedIntent.getStringExtra(TrainingSessionDetailFragment.ARG_ITEM_ID), equalTo("42"));
+        assertThat(startedIntent.getParcelableExtra(TrainingSessionDetailFragment.ARG_ITEM_ID), equalTo((Parcelable)trainingSession));
 
         assertThat(activity.getSupportFragmentManager().findFragmentById(R.id.trainingsession_detail_container),
                         is(nullValue()));
@@ -52,7 +49,8 @@ public class TrainingSessionListActivityTest {
         activity.setTrainingSessionDetailContainer(detailContainer);
         activity.onCreate(null);
 
-        activity.onItemSelected("42");
+        TrainingSession trainingSession = new TrainingSession();
+        activity.onItemSelected(trainingSession);
 
         Intent startedIntent = Robolectric.shadowOf(activity).getNextStartedActivity();
         assertThat(startedIntent, is(nullValue()));
@@ -62,7 +60,7 @@ public class TrainingSessionListActivityTest {
         assertThat(detailFragment, is(notNullValue()));
         assertThat(detailFragment, instanceOf(TrainingSessionDetailFragment.class));
         assertThat(detailFragment.getArguments(), is(notNullValue()));
-        assertThat(detailFragment.getArguments().getString(TrainingSessionDetailFragment.ARG_ITEM_ID), equalTo("42"));
+        assertThat(detailFragment.getArguments().getParcelable(TrainingSessionDetailFragment.ARG_ITEM_ID), equalTo((Parcelable)trainingSession));
     }
 
 }

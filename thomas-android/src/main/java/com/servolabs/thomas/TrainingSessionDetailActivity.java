@@ -16,8 +16,8 @@ public class TrainingSessionDetailActivity extends FragmentActivity {
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(TrainingSessionDetailFragment.ARG_ITEM_ID,
-                            getIntent().getStringExtra(TrainingSessionDetailFragment.ARG_ITEM_ID));
+            arguments.putParcelable(TrainingSessionDetailFragment.ARG_ITEM_ID,
+                            getIntent().getParcelableExtra(TrainingSessionDetailFragment.ARG_ITEM_ID));
             TrainingSessionDetailFragment fragment = new TrainingSessionDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction().add(R.id.trainingsession_detail_container, fragment)
