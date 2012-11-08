@@ -1,26 +1,25 @@
 package com.servolabs.thomas;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import android.content.Intent;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import com.servolabs.robolectric.ThomasTestRunner;
+import com.servolabs.thomas.domain.TrainingSession;
+import com.xtremelabs.robolectric.Robolectric;
+import com.xtremelabs.robolectric.tester.android.view.TestMenuItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+import java.util.Date;
 
-import com.servolabs.robolectric.ThomasTestRunner;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.tester.android.view.TestMenuItem;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(ThomasTestRunner.class)
 public class TrainingSessionDetailActivityTest {
 
-    private static final String FRAGMENT_ID = "42";
+    private static final TrainingSession TRAINING_SESSION = new TrainingSession("TestCourse", "TestInstructor", new Date());
 
     private TrainingSessionDetailActivity activity;
 
@@ -29,7 +28,7 @@ public class TrainingSessionDetailActivityTest {
         activity = new TrainingSessionDetailActivity();
 
         Intent intent = new Intent();
-        intent.putExtra(TrainingSessionDetailFragment.ARG_ITEM_ID, FRAGMENT_ID);
+        intent.putExtra(TrainingSessionDetailFragment.ARG_ITEM_ID, (Parcelable) TRAINING_SESSION);
         activity.setIntent(intent);
     }
 
@@ -42,8 +41,8 @@ public class TrainingSessionDetailActivityTest {
         assertThat(detailFragment, is(notNullValue()));
         assertThat(detailFragment, instanceOf(TrainingSessionDetailFragment.class));
         assertThat(detailFragment.getArguments(), is(notNullValue()));
-        assertThat(detailFragment.getArguments().getString(TrainingSessionDetailFragment.ARG_ITEM_ID),
-                        equalTo(FRAGMENT_ID));
+        assertThat(detailFragment.getArguments().getParcelable(TrainingSessionDetailFragment.ARG_ITEM_ID),
+                        equalTo((Parcelable)TRAINING_SESSION));
     }
 
     @Test
