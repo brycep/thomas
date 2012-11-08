@@ -28,7 +28,7 @@ public class TrainingSessionDetailActivityTest {
         activity = new TrainingSessionDetailActivity();
 
         Intent intent = new Intent();
-        intent.putExtra(TrainingSessionDetailFragment.ARG_ITEM_ID, (Parcelable) TRAINING_SESSION);
+        intent.putExtra(TrainingSessionDetailFragment.ARG_ITEM_ID, TRAINING_SESSION);
         activity.setIntent(intent);
     }
 
