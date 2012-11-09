@@ -44,7 +44,11 @@ public class TrainingSession implements Parcelable  {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(courseName);
         dest.writeString(instructor);
-        dest.writeLong(startTime.getTime());
+        if (null == startTime)  {
+            dest.writeLong(0);
+        } else  {
+            dest.writeLong(startTime.getTime());
+        }
     }
 
     public static final Parcelable.Creator<TrainingSession> CREATOR
@@ -61,6 +65,10 @@ public class TrainingSession implements Parcelable  {
     private TrainingSession(Parcel in) {
         courseName = in.readString();
         instructor = in.readString();
-        startTime = new Date(in.readLong());
+
+        long startTimeValue = in.readLong();
+        if (0 != startTimeValue)  {
+            startTime = new Date(in.readLong());
+        }
     }
 }

@@ -3,7 +3,9 @@ package com.servolabs.thomas;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.servolabs.robolectric.ThomasTestRunner;
 import com.servolabs.thomas.domain.TrainingSession;
@@ -12,6 +14,7 @@ import com.xtremelabs.robolectric.tester.android.util.TestLoaderManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +23,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(ThomasTestRunner.class)
 public class TrainingSessionListFragmentTest {
@@ -147,6 +153,41 @@ public class TrainingSessionListFragmentTest {
 
         // Make sure nothing bad happened.
         assertThat(somethingBad, is(nullValue()));
+    }
+
+    @Test
+    public void onDetatchShouldPutNullCallbacksInPlace()  {
+        fragment.mCallbacks = new TrainingSessionListFragment.Callbacks() {
+            @Override
+            public void onItemSelected(TrainingSession trainingSession) {
+                fail("This callback shouldn't be active after detaching from the activity");
+            }
+        };
+
+        fragment.onDetach();
+
+        // Since the 'null' callbacks should have been reattached to the
+        // fragment after the onDetach() was called.
+        fragment.mCallbacks.onItemSelected(new TrainingSession());
+    }
+
+    @Test
+    public void onListItemClickDeliversSelectedObjectToCallback()  {
+        TrainingSessionListFragment.Callbacks callback = Mockito.mock(TrainingSessionListFragment.Callbacks.class);
+        ListAdapter listAdapter = Mockito.mock(ListAdapter.class);
+        ListView listView = new ListView(Robolectric.application.getBaseContext());
+        View view = new View(Robolectric.application.getBaseContext());
+
+        fragment.mCallbacks = callback;
+        fragment.setListAdapter(listAdapter);
+
+        TrainingSession trainingSession = new TrainingSession();
+
+        when(listAdapter.getItem(1)).thenReturn(trainingSession);
+
+        fragment.onListItemClick(listView, view, 1, 0);
+
+        verify(callback).onItemSelected(trainingSession);
     }
 
     private class TestLoader extends Loader<List<TrainingSession>> {

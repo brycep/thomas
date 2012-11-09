@@ -22,11 +22,11 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
 
     private static final String LOG_TAG = TrainingSessionListFragment.class.getSimpleName();
 
-    private Callbacks mCallbacks = sNullCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     private Loader<List<TrainingSession>> trainingSessionListLoader; // TODO Replace with factory (a la Farpost2)
 
+    Callbacks mCallbacks = sNullCallbacks;
     public interface Callbacks {
 
         public void onItemSelected(TrainingSession trainingSession);
@@ -139,4 +139,5 @@ public class TrainingSessionListFragment extends ListFragment implements LoaderC
     void setTrainingSessionListLoader(Loader<List<TrainingSession>> trainingSessionListLoader) {
         this.trainingSessionListLoader = trainingSessionListLoader;
     }
+
 }
