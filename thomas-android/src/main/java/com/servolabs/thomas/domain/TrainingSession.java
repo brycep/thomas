@@ -9,6 +9,7 @@ public class TrainingSession implements Parcelable  {
     private String courseName;
     private String instructor;
     private Date startTime;
+    private int lengthInMinutes;
 
     public TrainingSession() {}
 
@@ -28,6 +29,14 @@ public class TrainingSession implements Parcelable  {
 
     public Date getStartTime() {
         return startTime;
+    }
+
+    public int getLengthInMinutes() {
+        return lengthInMinutes;
+    }
+
+    public void setLengthInMinutes(int lengthInMinutes) {
+        this.lengthInMinutes = lengthInMinutes;
     }
 
     @Override
