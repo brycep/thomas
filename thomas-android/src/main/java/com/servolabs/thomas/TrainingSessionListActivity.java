@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.FrameLayout;
 import com.servolabs.thomas.domain.TrainingSession;
 
+/**
+ * Displays a list of training sessions. If the device is sufficiently large, the screen will display in two panes, 
+ * where selecting a training session from the list will display detailed information in the second pane.
+ */
 public class TrainingSessionListActivity extends FragmentActivity implements TrainingSessionListFragment.Callbacks {
 
     private FrameLayout detailContainer; // Added for unit tests
