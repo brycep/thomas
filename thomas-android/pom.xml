@@ -6,7 +6,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>apk</packaging>
   <name>Thomas The Training Course Manager</name>
-  <description>- A Really Useful Application and right on time.</description>
+  <description>A Really Useful Application and right on time.</description>
 
 
   <properties>
